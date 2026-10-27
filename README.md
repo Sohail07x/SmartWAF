@@ -1,76 +1,74 @@
-# SmartWAF — Machine Learning-Based Web Application Firewall Prototype
+# SmartWAF Detection and Explainable AI — Module 1
 
-SmartWAF is a learning and demonstration project that explores how machine learning can help classify potentially suspicious web requests. It combines a Python/Flask web application with a Random Forest classifier built using scikit-learn.
+## Module 1: Dataset Collection and Preparation
 
-> **Project status:** Tested prototype for learning and demonstration. It is not a production-ready web application firewall, and its detection performance and security have not been independently validated.
+### Purpose
+This module prepares the SmartWAF HTTP request dataset for the next ML module.
 
-## Project goals
+Pipeline:
 
-- Explore a machine-learning approach to classifying web requests.
-- Demonstrate how request features can be passed to a trained classifier.
-- Connect a Python backend, a model, and a simple web interface.
-- Learn about web-security patterns such as SQL injection and cross-site scripting (XSS).
+Raw Excel Dataset
+→ Dataset Loader
+→ Dataset Inspection
+→ YAML Schema Validation
+→ Dataset Validation
+→ Dataset Analysis
+→ Master CSV Export
+→ Automated Tests
 
-## Technologies
+## IMPORTANT: Dataset File
 
-- **Python** — application logic
-- **Flask** — web application/backend
-- **scikit-learn** — machine-learning workflow
-- **Random Forest** — classification model
-- **HTML and CSS** — user interface
-- **Git and GitHub** — version control and project hosting
+Place your exact dataset in:
 
-## How it works
+data/raw/SmartWAF_Synthetic_Dataset_10000.xlsx
 
-1. A request or sample input is submitted to the application.
-2. The application derives a set of manually designed features from the input.
-3. The trained Random Forest model classifies the feature representation.
-4. The prototype displays or records the resulting classification as part of its demonstration workflow.
+The program expects exactly that filename.
 
-The project explores patterns associated with SQL injection and XSS. These classifications should be treated as experimental signals, not as proof that a request is safe or malicious.
+## VS Code Setup
 
-## Features explored
+Open the `SmartWAF_Module1_Complete` folder in VS Code.
 
-- Feature-based classification of web-request inputs
-- A Flask-based backend
-- A simple web interface/dashboard
-- Demonstration of allow/block decisions for classified requests
-- A small labelled sample dataset for experimentation
+Open Terminal:
 
-## Repository contents
+```powershell
+Ctrl + Shift + `
+```
 
-The repository includes the project materials and a `smartwaf.zip` archive. Extract the archive to inspect the application files before running the project.
+Create and activate the environment:
 
-## Running the project
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
 
-The application files are provided in the `smartwaf.zip` archive. Because the exact Python environment and dependencies may vary, inspect the extracted files for the dependency list and application entry point before running it. Use an isolated Python virtual environment and install only the dependencies required by the project.
+Install packages:
 
-Do not expose the prototype to the public internet or use it as the only security control for a real application.
+```powershell
+python -m pip install -r requirements.txt
+```
 
-## Limitations and responsible use
+## Run Module 1
 
-- The project uses a small dataset and manually designed features; results may not generalize to real-world traffic.
-- Model accuracy, false-positive rate, and false-negative rate have not been independently benchmarked.
-- The prototype has not been validated as a production reverse proxy or as a complete security layer.
-- A request classified as benign may still be malicious, and a suspicious classification may be a false positive.
-- This project is for educational experimentation. Use established security controls, testing, and expert review for real systems.
+Run these commands from the project root:
 
-## Learning outcomes
+```powershell
+python -m src.data.inspect_dataset
+python -m src.data.loader
+python -m src.data.validate_dataset
+python -m src.data.analyzer
+python -m src.data.export_master
+python -m pytest -q
+```
 
-This project provided hands-on exploration of connecting a machine-learning classifier to a web application, designing request features, using Flask, and considering the limitations of ML-based security detection.
+## Expected Final Files
 
-## Author's contribution
+After successful execution:
 
-The implementation was developed through a combination of personal coding, AI-assisted development, tutorials, and existing learning resources. The project is presented as a learning prototype, with its scope and limitations stated explicitly.
+- `reports/dataset_profile.json`
+- `data/master/smartwaf_master_v1.csv`
 
-## Future improvements
+## Expected Test Result
 
-- Add reproducible installation and run instructions after validating the environment.
-- Build a larger, more representative labelled dataset.
-- Evaluate precision, recall, false positives, and false negatives on held-out data.
-- Add tests, input validation, and clearer logging.
-- Document the threat model and compare the approach with established security tools.
-
----
-
-**Disclaimer:** SmartWAF is an educational prototype, not a substitute for a professionally configured Web Application Firewall (WAF), secure coding practices, or security testing.
+```text
+6 passed
+```
